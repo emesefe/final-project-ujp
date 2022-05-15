@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,6 +84,13 @@ public class GameManager : MonoBehaviour
     {
         canClickOnAnswer = false;
         gameOver = true;
+
+        PersistentData.score = rightAnswersCounter;
+        if (rightAnswersCounter > PersistentData.bestScore)
+        {
+            PersistentData.bestScore = rightAnswersCounter;
+        }
+        
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("Game Over");
     }
