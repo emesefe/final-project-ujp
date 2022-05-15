@@ -22,10 +22,7 @@ public class Operations : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NewOperation();
-        }
+        
     }
 
     private void ShowOperation(int a, int b)
@@ -76,7 +73,7 @@ public class Operations : MonoBehaviour
         }
     }
 
-    private void NewOperation()
+    public void NewOperation()
     {
         int a = GenerateRandomNumber(2);
         int b = GenerateRandomNumber(2);

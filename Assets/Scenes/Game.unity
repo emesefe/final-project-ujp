@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 110369965}
   - component: {fileID: 110369964}
   m_Layer: 5
-  m_Name: Points Text
+  m_Name: Counter Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,8 +306,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294770685
+  m_fontColor: {r: 0.99215686, g: 1, b: 0.9882353, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 619054520}
   - component: {fileID: 619054522}
   - component: {fileID: 619054521}
+  - component: {fileID: 619054523}
   m_Layer: 5
   m_Name: Time Text
   m_TagString: Untagged
@@ -725,8 +726,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294770685
+  m_fontColor: {r: 0.99215686, g: 1, b: 0.9882353, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -793,6 +794,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619054519}
   m_CullTransparentMesh: 1
+--- !u!95 &619054523
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619054519}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6126366a761e04f528006afa0884cf86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &733472683
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,6 +843,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canClickOnAnswer: 1
+  gameOver: 0
+  counter: {fileID: 110369964}
+  timer: {fileID: 619054521}
 --- !u!4 &733472685
 Transform:
   m_ObjectHideFlags: 0

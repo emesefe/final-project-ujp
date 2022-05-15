@@ -16,6 +16,8 @@ public class Answer : MonoBehaviour, IPointerDownHandler
     private Color wrongColor = new Color(240 / 255f, 101 / 255f, 67 / 255f);
     private Image _image;
 
+    private float penaltySeconds = -5f;
+
     private void Start()
     {
         _image = GetComponent<Image>();
@@ -31,18 +33,32 @@ public class Answer : MonoBehaviour, IPointerDownHandler
     {
         if (GameManager.sharedInstance.canClickOnAnswer)
         {
-            StartCoroutine(ColorAnswer(IsRightAnswer() ? rightColor: wrongColor));
+            StartCoroutine(AnswerOperation(IsRightAnswer()));
         }
     }
 
-    private IEnumerator ColorAnswer(Color color)
+    private IEnumerator AnswerOperation(bool answeredCorrectly)
     {
         GameManager.sharedInstance.canClickOnAnswer = false;
-        _image.color = color;
+        _image.color = answeredCorrectly ? rightColor : wrongColor;
+
+        if (answeredCorrectly)
+        {
+            GameManager.sharedInstance.OneMoreRightAnswer();
+        }
+        else
+        {
+            GameManager.sharedInstance.UpdateTimer(penaltySeconds);
+        }
         
         yield return new WaitForSeconds(2f);
         
         _image.color = defaultColor;
         GameManager.sharedInstance.canClickOnAnswer = true;
+        
+        if (!GameManager.sharedInstance.gameOver)
+        {
+            operationsScript.NewOperation();
+        }
     }
 }
