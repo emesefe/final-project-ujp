@@ -9,8 +9,10 @@ using Random = UnityEngine.Random;
 
 public class Operations : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI operationText;
-    [SerializeField] private TextMeshProUGUI[] solutionsText;
+    [SerializeField] protected TextMeshProUGUI operationText;
+    [SerializeField] protected TextMeshProUGUI[] solutionsText;
+
+    protected bool canBeNegative = true;
     
     private List<int> _solutions;
     public int solutionIdx { get; private set; }
@@ -20,33 +22,28 @@ public class Operations : MonoBehaviour
         NewOperation();
     }
 
-    private void Update()
-    {
-        
-    }
-
-    private void ShowOperation(int a, int b)
+    protected virtual void ShowOperation(int a, int b)
     {
         operationText.text = b < 0 ? $"{a} + ({b})" : $"{a} + {b}";
     }
 
-    private int Operation(int a, int b)
+    protected virtual int Operation(int a, int b)
     {
         return a + b;
     }
 
-    private int GenerateRandomNumber(int figures, bool canBeNegative = false)
+    private int GenerateRandomNumber(int figures, bool numCanBeNegative = false)
     {
         int max = (int) Mathf.Pow(10, figures);
-        return Random.Range(canBeNegative ? -max + 1 : 0, max);
+        return Random.Range(numCanBeNegative ? -max + 1 : 0, max);
     }
 
-    private int GenerateWrongSolution(int sol, bool canBeNegative = false)
+    private int GenerateWrongSolution(int sol, bool numCanBeNegative = false)
     {
         int wrongSolution = sol;
         while (_solutions.Contains(wrongSolution))
         {
-            wrongSolution = Random.Range(canBeNegative ? -2 * sol : 0, 2 * sol);
+            wrongSolution = Random.Range(numCanBeNegative ? -2 * sol : 0, 2 * sol);
         }
 
         _solutions.Add(wrongSolution);
@@ -69,14 +66,14 @@ public class Operations : MonoBehaviour
                 continue;
             }
 
-            solutionsText[i].text = GenerateWrongSolution(solution).ToString();
+            solutionsText[i].text = GenerateWrongSolution(solution, canBeNegative).ToString();
         }
     }
 
     public void NewOperation()
     {
-        int a = GenerateRandomNumber(2);
-        int b = GenerateRandomNumber(2);
+        int a = GenerateRandomNumber(2, canBeNegative);
+        int b = GenerateRandomNumber(2, canBeNegative);
         
         ShowOperation(a, b);
 

@@ -21,7 +21,19 @@ public class Answer : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         _image = GetComponent<Image>();
-        operationsScript = FindObjectOfType<Operations>();
+        
+        //operationsScript = FindObjectOfType<Operations>();
+
+        if (PersistentData.selectedMode == Mode.Sums)
+        {
+            operationsScript = FindObjectOfType<Sums>();
+        }else if (PersistentData.selectedMode == Mode.Subtractions)
+        {
+            operationsScript = FindObjectOfType<Subtractions>();
+        }else if (PersistentData.selectedMode == Mode.Products)
+        {
+            operationsScript = FindObjectOfType<Products>();
+        }
     }
 
     private bool IsRightAnswer()

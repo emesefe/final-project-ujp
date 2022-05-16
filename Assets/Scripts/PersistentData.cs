@@ -5,4 +5,5 @@ using UnityEngine;
 public static class PersistentData
 {
     public static int score, bestScore;
+    public static Mode selectedMode = Mode.None;
 }

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI counter;
     [SerializeField] private TextMeshProUGUI timer;
+    [SerializeField] private GameObject[] modes;
     
     private int rightAnswersCounter;
     private float startTime = 90f; // 1:30 por ronda
@@ -47,6 +48,8 @@ public class GameManager : MonoBehaviour
         gameOver = false;
 
         timerAnimator = timer.gameObject.GetComponent<Animator>();
+        
+        ActiveSelectedMode();
     }
 
     private void UpdateRightAnswerCounterText()
@@ -93,6 +96,14 @@ public class GameManager : MonoBehaviour
         
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("Game Over");
+    }
+
+    private void ActiveSelectedMode()
+    {
+        for (int i = 0; i < modes.Length; i++)
+        {
+            modes[i].SetActive(PersistentData.selectedMode == (Mode) i);
+        }
     }
     
     public void OneMoreRightAnswer()
