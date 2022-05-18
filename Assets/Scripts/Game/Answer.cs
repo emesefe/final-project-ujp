@@ -57,10 +57,12 @@ public class Answer : MonoBehaviour, IPointerDownHandler
         if (answeredCorrectly)
         {
             GameManager.sharedInstance.OneMoreRightAnswer();
+            GameManager.sharedInstance.PlayRightAnswerClip();
         }
         else
         {
             GameManager.sharedInstance.UpdateTimer(penaltySeconds);
+            GameManager.sharedInstance.PlayWrongAnswerClip();
         }
         
         yield return new WaitForSeconds(2f);

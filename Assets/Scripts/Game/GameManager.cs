@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,11 +11,15 @@ public class GameManager : MonoBehaviour
     
     public bool canClickOnAnswer = true;
     public bool gameOver;
+    
 
     [SerializeField] private TextMeshProUGUI counter;
     [SerializeField] private TextMeshProUGUI timer;
     [SerializeField] private GameObject[] modes;
     
+    [SerializeField] private AudioSource sfxAS;
+    [SerializeField] private AudioClip rightClip, wrongClip;
+
     private int rightAnswersCounter;
     private float startTime = 90f; // 1:30 por ronda
     private float t;
@@ -50,6 +52,11 @@ public class GameManager : MonoBehaviour
         timerAnimator = timer.gameObject.GetComponent<Animator>();
         
         ActiveSelectedMode();
+
+        Time.timeScale = 1;
+
+        sfxAS.mute = !PersistentData.sfxOn;
+        sfxAS.volume = PersistentData.sfxVolume;
     }
 
     private void UpdateRightAnswerCounterText()
@@ -89,9 +96,12 @@ public class GameManager : MonoBehaviour
         gameOver = true;
 
         PersistentData.score = rightAnswersCounter;
-        if (rightAnswersCounter > PersistentData.bestScore)
+        int currentBestScore =
+            PersistentData.bestScores[PersistentData.selectedDifficulty][(int) PersistentData.selectedMode];
+        if (rightAnswersCounter > currentBestScore)
         {
-            PersistentData.bestScore = rightAnswersCounter;
+            PersistentData.bestScores[PersistentData.selectedDifficulty][(int) PersistentData.selectedMode] = 
+                rightAnswersCounter;
         }
         
         yield return new WaitForSeconds(2f);
@@ -130,5 +140,15 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
+    }
+
+    public void PlayRightAnswerClip()
+    {
+        sfxAS.PlayOneShot(rightClip);
+    }
+    
+    public void PlayWrongAnswerClip()
+    {
+        sfxAS.PlayOneShot(wrongClip);
     }
 }

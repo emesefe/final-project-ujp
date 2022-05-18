@@ -4,22 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using UnityEditor.Analytics;
 using Random = UnityEngine.Random;
 
 public class Operations : MonoBehaviour
 {
+    public int solutionIdx { get; private set; }
+    
     [SerializeField] protected TextMeshProUGUI operationText;
     [SerializeField] protected TextMeshProUGUI[] solutionsText;
 
     protected bool canBeNegative = true;
     
     private List<int> _solutions;
-    public int solutionIdx { get; private set; }
+    private int _figuresPerDifficulty = 2;
 
     private void Start()
     {
         NewOperation();
+        _figuresPerDifficulty = FiguresPerDifficulty();
     }
 
     protected virtual void ShowOperation(int a, int b)
@@ -70,10 +72,26 @@ public class Operations : MonoBehaviour
         }
     }
 
+    private int FiguresPerDifficulty()
+    {
+        if (PersistentData.selectedDifficulty == Difficulty.Easy)
+        {
+            return 2;
+        }
+        
+        if (PersistentData.selectedDifficulty == Difficulty.Medium)
+        {
+            return 3;
+        }
+        
+        // if (PersistentData.selectedDifficulty == Difficulty.Hard)
+        return 4;
+    }
+
     public void NewOperation()
     {
-        int a = GenerateRandomNumber(2, canBeNegative);
-        int b = GenerateRandomNumber(2, canBeNegative);
+        int a = GenerateRandomNumber(_figuresPerDifficulty, canBeNegative);
+        int b = GenerateRandomNumber(_figuresPerDifficulty, canBeNegative);
         
         ShowOperation(a, b);
 

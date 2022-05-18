@@ -12,7 +12,7 @@ public class Subtractions : Operations
     
     protected override void ShowOperation(int a, int b)
     {
-        operationText.text = b < 0 ? $"{a} + ({b})" : $"{a} + {b}";
+        operationText.text = b < 0 ? $"{a} - {-b}" : $"{a} + {b}";
     }
 
     protected override int Operation(int a, int b)
